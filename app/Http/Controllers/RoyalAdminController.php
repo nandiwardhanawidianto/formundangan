@@ -81,6 +81,10 @@ class RoyalAdminController extends Controller
             'status' => ['sometimes', 'in:draft,submitted,needs_revision,approved'],
             'shopee_username' => ['sometimes', 'nullable', 'string', 'max:120'],
             'payload' => ['sometimes', 'array'],
+            'payload.love_gift' => ['sometimes', 'array', 'max:3'],
+            'payload.love_gift.*.bank' => ['nullable', 'string', 'max:120'],
+            'payload.love_gift.*.account_number' => ['nullable', 'string', 'max:120'],
+            'payload.love_gift.*.account_name' => ['nullable', 'string', 'max:120'],
             'customer_whatsapp' => ['sometimes', 'string', 'max:20'],
         ]);
         if (($data['status'] ?? null) === 'approved') $data['reviewed_at'] = now();
