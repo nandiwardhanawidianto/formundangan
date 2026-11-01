@@ -20,10 +20,19 @@ class RoyalAdminController extends Controller
 
     public function login(Request $request): JsonResponse
     {
-        $data = $request->validate(['email' => 'required|email', 'password' => 'required|string']);
-        if (!Auth::attempt($data) || !Auth::user()->is_admin) {
+        $data = $request->validate([
+            'username' => ['required', 'string', 'max:60'],
+            'password' => ['required', 'string'],
+        ]);
+        // Pemeriksaan peran admin dilakukan sebagai bagian dari autentikasi.
+        // Jangan pernah menerima akses hanya karena URL /admin diketahui.
+        if (!Auth::attempt([
+            'username' => $data['username'],
+            'password' => $data['password'],
+            'is_admin' => true,
+        ])) {
             Auth::logout();
-            throw ValidationException::withMessages(['email' => 'Email atau kata sandi salah.']);
+            throw ValidationException::withMessages(['username' => 'Nama pengguna atau kata sandi salah.']);
         }
         $request->session()->regenerate();
         return response()->json(['ok' => true]);

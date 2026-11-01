@@ -14,7 +14,7 @@ composer install
 cp .env.example .env
 php artisan key:generate
 # Buat database MySQL form_undangan, lalu isi DB_* di .env
-# Set ROYAL_ADMIN_EMAIL, ROYAL_ADMIN_PASSWORD (minimal 12 karakter), dan ROYAL_ADMIN_WHATSAPP di .env
+# Set ROYAL_ADMIN_USERNAME, ROYAL_ADMIN_EMAIL, ROYAL_ADMIN_PASSWORD (minimal 12 karakter), dan ROYAL_ADMIN_WHATSAPP di .env
 php artisan migrate
 php artisan db:seed --class=RoyalAdminSeeder
 npm install
@@ -22,12 +22,13 @@ npm run build
 php artisan serve
 ```
 
-Alamat: `http://127.0.0.1:8000/` untuk pelanggan dan `http://127.0.0.1:8000/admin` untuk admin. Untuk hot reload, jalankan `npm run dev` di terminal lain.
+Alamat pelanggan: `http://127.0.0.1:8000/` (tanpa tombol atau tautan admin). Alamat admin terpisah: `http://127.0.0.1:8000/admin` (login menggunakan **username dan password**, baru kemudian muncul dashboard serta lonceng notifikasi). Untuk hot reload, jalankan `npm run dev` di terminal lain.
 
 ## Catatan penting
 
 - Aplikasi harus di-host dengan document root mengarah ke `/public`, HTTPS, serta `APP_DEBUG=false` pada produksi.
 - Database harus dibuat sebelum menjalankan migrasi.
+- GitHub Pages (`docs/index.html`) adalah **preview pelanggan saja**; tidak menyediakan halaman admin maupun login sungguhan. Halaman admin hanya aktif saat menjalankan Laravel dan database.
 - Foto berada di disk **private**, bukan direktori publik.
 - Tidak perlu API berbayar; verifikasi pesanan Shopee dilakukan manual oleh admin.
 - Sebelum deploy, pastikan format JSON sesuai CMS produksi, dan JSX disesuaikan template Illustrator asli.
@@ -39,6 +40,7 @@ Alamat: `http://127.0.0.1:8000/` untuk pelanggan dan `http://127.0.0.1:8000/admi
 - `app/Http/Controllers/WeddingOrderController.php`: simpan, pulihkan, kirim, unggah, hapus foto.
 - `app/Http/Controllers/RoyalAdminController.php`: autentikasi dan dashboard admin.
 - `app/Services/InvitationExporter.php`: JSON dan JSX (draf).
-- `resources/js/royal.jsx`: antarmuka pelanggan dan admin.
+- `resources/views/royal-app.blade.php` dan `resources/views/royal-admin.blade.php`: halaman pelanggan dan admin yang terpisah.
+- `resources/js/royal.jsx`: komponen pelanggan dan admin, dipilih berdasarkan identitas halaman.
 - `resources/css/royal.css`: tampilan responsive.
 - `database/migrations`: struktur data.

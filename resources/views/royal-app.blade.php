@@ -8,5 +8,5 @@
     @viteReactRefresh
     @vite(['resources/css/royal.css', 'resources/js/royal.jsx'])
 </head>
-<body><div id="root"></div></body>
+<body><div id="root" data-app="customer"></div></body>
 </html>

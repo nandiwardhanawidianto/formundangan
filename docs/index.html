@@ -26,14 +26,14 @@ footer{text-align:center;color:#96877b;font-size:11px;margin-top:24px}
 .topbutton{background:transparent;border:1px solid #decfbe;color:#936a54;border-radius:18px;font-size:11px;font-weight:700;padding:9px 12px;cursor:pointer;position:relative}.count{background:#b97362;color:white;border-radius:20px;padding:2px 5px;margin-left:5px}
 @media(max-width:500px){header{height:66px;padding:0 15px}.shell{padding:14px 10px 28px}.panel{border-radius:21px;min-height:calc(100dvh - 170px);padding:24px 19px}.notice{font-size:11px}.brand strong{font-size:10px}.brand small{font-size:8px}.mark{height:35px;width:35px;font-size:23px}.actions{gap:7px}.actions .btn{padding:11px 13px}}
 </style></head><body>
-<header><div class="brand"><div class="mark">R</div><div><strong>ROYAL WEDDING</strong><small>INVITATION</small></div></div><button class="topbutton" id="admin" type="button">🔔 Admin <span class="count" id="count">0</span></button></header>
+<header><div class="brand"><div class="mark">R</div><div><strong>ROYAL WEDDING</strong><small>INVITATION</small></div></div></header>
 <main class="shell"><div class="notice">MODE PRATINJAU — Jangan masukkan data pelanggan asli. Data tidak dikirim ke server dan hilang saat halaman dimuat ulang.</div><section class="panel" id="panel"></section><footer>Royal Wedding Invitation · Pratinjau antarmuka seluler</footer></main>
 <script>
 (function(){
 'use strict';
 var data={order:'',wa:'',shop:'',type:'',photo:'',display:'wanita',groom:'',gshort:'',gorder:'',gfather:'',gmom:'',bride:'',bshort:'',border:'',bfather:'',bmom:'',pengangkat:'',turut:'',bank:'',rekening:'',atasnama:'',kado:'',kadotel:'',kadoalamat:'',gifts:[],files:[]};
 for(var i=1;i<=3;i++){data['event'+i]='';data['date'+i]='';data['time'+i]='';data['loc'+i]='';data['map'+i]='';}
-var steps=[],index=-1,activeGift=0,submitted=0,adminView=false,errors='',panel=document.getElementById('panel');
+var steps=[],index=-1,activeGift=0,errors='',panel=document.getElementById('panel');
 var spec=[
 {id:'product',title:'Pilih jenis undangan',desc:'Sesuaikan dengan produk yang dibeli di Shopee.',fields:[{key:'type',type:'choice',label:'Jenis Undangan',options:[['digital','Undangan Digital Website','Undangan dalam bentuk website'],['print','Undangan Cetak','Undangan fisik yang dicetak']]}]},
 {id:'photo',title:'Pilih paket foto',desc:'Pastikan pilihan ini sama dengan pesanan Shopee.',fields:[{key:'photo',type:'choice',label:'Jenis Paket',options:[['yes','Dengan Foto','Maksimal 10 foto'],['no','Tanpa Foto','Tidak menggunakan foto']]}]},
@@ -66,7 +66,7 @@ var input=f.type==='textarea'?document.createElement('textarea'):document.create
 function error(){if(errors){var p=document.createElement('p');p.className='error';p.textContent=errors;panel.appendChild(p);}}
 function actions(buttons){var line=div('actions');buttons.forEach(function(b){line.appendChild(b);});panel.appendChild(line);}
 function checkPage(){errors='';if(!data.order.trim()||!data.wa.trim()){errors='Nomor pesanan dan nomor WhatsApp wajib diisi.';render();return;}if(!/^(\+?62|0)[0-9]{8,15}$/.test(data.wa.replace(/[\s-]/g,''))){errors='Periksa kembali nomor WhatsApp Anda.';render();return;}index=0;render();}
-function render(){adminView=false;panel.replaceChildren();var tag=document.getElementById('count');tag.textContent=String(submitted);
+function render(){panel.replaceChildren();
 if(index===-1){heading('Setiap kisah cinta punya awal yang indah.','Isi data undangan satu langkah setiap kali. Tidak perlu mengisi semuanya sekaligus.','FORMULIR PELANGGAN · PRATINJAU');var top=div('formarea');var tip=div('tip');tip.innerHTML='<strong>Cara menemukan nomor pesanan</strong><br>Buka Shopee → Saya → Pesanan Saya → pilih pesanan undangan → lihat Nomor Pesanan. Gambar panduan asli akan ditambahkan saat peluncuran.';top.appendChild(tip);addField({key:'order',label:'Nomor Pesanan Shopee'},top);addField({key:'wa',label:'Nomor WhatsApp Aktif',type:'tel',placeholder:'081234567890'},top);panel.appendChild(top);error();actions([btn('Lanjut →','primary',checkPage)]);return;}
 steps=allSteps();if(index>=steps.length)index=steps.length-1;var step=steps[index];var pro=div('progress');var a=document.createElement('span'),b=document.createElement('span');a.textContent='Langkah '+(index+1)+' dari '+steps.length;b.textContent=Math.round((index+1)/steps.length*100)+'%';pro.appendChild(a);pro.appendChild(b);panel.appendChild(pro);var track=div('track'),fill=div('fill');fill.style.width=((index+1)/steps.length*100)+'%';track.appendChild(fill);panel.appendChild(track);heading(step.title,step.desc,'DATA UNDANGAN');var fields=div('formarea');step.fields.forEach(function(f){addField(f,fields);});
 if(step.id==='gift'){
@@ -90,12 +90,11 @@ else{var full=div('help');full.textContent='Batas maksimal 3 rekening tercapai.'
 if(step.id==='review'){var summary=div('review');[['Nomor Pesanan',data.order],['WhatsApp',data.wa],['Produk',data.type==='digital'?'Undangan Digital '+(data.photo==='yes'?'Dengan Foto':'Tanpa Foto'):'Undangan Cetak'],['Mempelai Pria',data.groom||'Belum diisi'],['Mempelai Wanita',data.bride||'Belum diisi'],['Acara 1',data.event1||'Belum diisi'],['Acara 2',data.event2||'Belum diisi'],['Acara 3',data.event3||'Belum diisi'],['Jumlah Love Gift',String(data.gifts.length)],['Jumlah Foto',String(data.files.length)]].forEach(function(pair){var d=document.createElement('div'),s=document.createElement('span'),v=document.createElement('strong');s.textContent=pair[0];v.textContent=pair[1];d.appendChild(s);d.appendChild(v);summary.appendChild(d);});fields.appendChild(summary);}
 panel.appendChild(fields);error();
 var back=btn('← Kembali','',function(){index=Math.max(-1,index-1);errors='';render();});
-if(step.id==='review'){actions([back,btn('Simulasikan Pengajuan','primary',function(){submitted++;index=-2;renderSuccess();})]);}
+if(step.id==='review'){actions([back,btn('Simulasikan Pengajuan','primary',function(){index=-2;renderSuccess();})]);}
 else{actions([back,btn('Isi Nanti','soft',function(){index++;errors='';render();}),btn('Lanjut →','primary',function(){if(step.id==='product'&&!data.type){errors='Pilih jenis undangan terlebih dahulu.';return render();}if(step.id==='photo'&&!data.photo){errors='Pilih paket foto terlebih dahulu.';return render();}index++;errors='';render();})]);}
 var helper=document.createElement('p');helper.className='help';helper.textContent='Ini hanya pratinjau. Data tidak tersimpan pada database.';panel.appendChild(helper);
 }
-function renderSuccess(){panel.replaceChildren();var mark=div('success');mark.innerHTML='<strong>Simulasi berhasil!</strong><br>Dalam website asli, data akan disimpan, lonceng admin bertambah, lalu WhatsApp admin terbuka. Di pratinjau ini tidak ada data yang dikirim.';panel.appendChild(mark);heading('Terima kasih!','Anda telah mencoba seluruh alur pengisian undangan.');actions([btn('Lihat Simulasi Admin','primary',renderAdmin),btn('Ulangi Pratinjau','',function(){index=-1;submitted=0;render();})]);document.getElementById('count').textContent=String(submitted);}
-function renderAdmin(){adminView=true;panel.replaceChildren();heading('Pratinjau Dashboard Admin','Ini hanya simulasi. Tidak menampilkan atau menyimpan pesanan asli.','🔔 '+submitted+' PENGAJUAN BARU');var tip=div('tip');tip.textContent=submitted?'Nomor Pesanan: '+data.order+' · Status: Menunggu Pemeriksaan · WhatsApp: '+data.wa:'Belum ada pesanan simulasi masuk.';panel.appendChild(tip);actions([btn('Kembali ke Form','primary',function(){index=-1;render();})]);}
-document.getElementById('admin').addEventListener('click',renderAdmin);render();
+function renderSuccess(){panel.replaceChildren();var mark=div('success');mark.innerHTML='<strong>Simulasi pengajuan berhasil!</strong><br>Ini hanya pratinjau formulir pelanggan. Tidak ada pesanan atau pesan WhatsApp yang benar-benar dikirim.';panel.appendChild(mark);heading('Terima kasih!','Anda telah mencoba seluruh alur pengisian undangan.');actions([btn('Ulangi Pratinjau','primary',function(){index=-1;render();})]);}
+render();
 })();
 </script></body></html>

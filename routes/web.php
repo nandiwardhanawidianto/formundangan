@@ -5,7 +5,8 @@ use App\Http\Controllers\WeddingOrderController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'royal-app');
-Route::view('/admin', 'royal-app');
+// Halaman login dan dashboard khusus admin; akses data dilindungi auth + is_admin.
+Route::view('/admin', 'royal-admin');
 
 Route::prefix('api')->group(function () {
     // Public order lookup is intentional per V6; throttle to mitigate abuse.
