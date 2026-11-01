@@ -45,7 +45,7 @@ class InvitationExporter
             'mempelai_2' => array_filter($b, fn($v) => $v !== ''), 'events' => $events];
         if ($order->product_type === 'digital') {
             $gifts = [];
-            foreach (($p['love_gift'] ?? []) as $gift) {
+            foreach (array_slice($p['love_gift'] ?? [], 0, 3) as $gift) {
                 if (!isset($gift['account_number']) || trim($gift['account_number']) === '') continue;
                 $gift['bank'] = strcasecmp(trim($gift['bank'] ?? ''), 'seabank') === 0 ? 'Sea Bank' : ($gift['bank'] ?? '');
                 $gifts[] = $gift;
