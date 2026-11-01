@@ -76,6 +76,10 @@ class WeddingOrderController extends Controller
             ? ($data['photo_package'] ?? $order->photo_package) : null;
         $changed = count($data) > 0;
         $order->fill($data);
+        if ($order->product_type === 'digital' && $order->cms_sync_status === 'pending_review' && $order->isDirty()) {
+            $order->cms_sync_status = 'outdated';
+            $order->cms_sync_error = 'Data berubah setelah dikirim ke CMS; kirim ulang setelah review.';
+        }
         if ($changed && in_array($order->status, ['approved','submitted'], true) && $order->isDirty()) {
             $order->status = 'needs_revision';
             $order->reviewed_at = null;
@@ -128,7 +132,13 @@ class WeddingOrderController extends Controller
             ]);
         }
         if (in_array($order->status, ['approved', 'submitted'], true)) {
-            $order->update(['status' => 'needs_revision', 'reviewed_at' => null, 'notification_seen_at' => null]);
+            $order->update([
+                'status' => 'needs_revision',
+                'reviewed_at' => null,
+                'notification_seen_at' => null,
+                'cms_sync_status' => $order->cms_sync_status === 'pending_review' ? 'outdated' : $order->cms_sync_status,
+                'cms_sync_error' => $order->cms_sync_status === 'pending_review' ? 'Jumlah foto berubah; kirim ulang data ke CMS.' : $order->cms_sync_error,
+            ]);
         }
         return response()->json(['order' => $this->viewOrder($order)]);
     }
@@ -147,7 +157,13 @@ class WeddingOrderController extends Controller
         Storage::disk('local')->delete($photo->storage_path);
         $photo->delete();
         if (in_array($order->status, ['approved', 'submitted'], true)) {
-            $order->update(['status' => 'needs_revision', 'reviewed_at' => null, 'notification_seen_at' => null]);
+            $order->update([
+                'status' => 'needs_revision',
+                'reviewed_at' => null,
+                'notification_seen_at' => null,
+                'cms_sync_status' => $order->cms_sync_status === 'pending_review' ? 'outdated' : $order->cms_sync_status,
+                'cms_sync_error' => $order->cms_sync_status === 'pending_review' ? 'Jumlah foto berubah; kirim ulang data ke CMS.' : $order->cms_sync_error,
+            ]);
         }
         return response()->json(['order' => $this->viewOrder($order)]);
     }

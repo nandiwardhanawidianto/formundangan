@@ -98,7 +98,13 @@ class RoyalAdminController extends Controller
             'customer_whatsapp' => ['sometimes', 'string', 'max:20'],
         ]);
         if (($data['status'] ?? null) === 'approved') $data['reviewed_at'] = now();
-        $order->update($data);
+        $order->fill($data);
+        if ($order->product_type === 'digital' && $order->cms_sync_status === 'pending_review'
+            && $order->isDirty(['payload', 'customer_whatsapp', 'shopee_username'])) {
+            $order->cms_sync_status = 'outdated';
+            $order->cms_sync_error = 'Admin mengubah data; sinkronisasi ulang dibutuhkan.';
+        }
+        $order->save();
         return response()->json(['order' => $order->fresh('photos')]);
     }
 
