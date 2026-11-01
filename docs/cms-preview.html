@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#fcf8f4">
+<title>Pratinjau Antrean Review CMS — Royal Wedding Invitation</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:#fbf9f6;color:#2a2928;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0}button,input,select,textarea{font:inherit}button{cursor:pointer}
+.header{background:#fff;border-bottom:1px solid #eee9e4;padding:15px clamp(16px,4vw,44px);display:flex;justify-content:space-between;align-items:center;gap:12px}
+.identity{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;border-radius:12px;background:#a46f5e;color:white;font-family:Georgia,serif;font-size:29px;display:grid;place-items:center}
+.identity strong{display:block;font-size:12px;letter-spacing:1.6px}.identity span{color:#8b7c71;font-size:11px}.header-r{display:flex;align-items:center;gap:12px}.avatar{border-radius:50%;width:32px;height:32px;background:#eee1d6;color:#9b6c59;display:grid;place-items:center;font-weight:800;font-size:12px}
+.bell{border:1px solid #eee4db;background:#fff;border-radius:10px;padding:7px 9px;font-size:16px}.bell b{background:#bd6e57;color:white;border-radius:20px;font-size:10px;padding:2px 5px;margin-left:3px}
+.demo{background:#fff1d8;color:#775b30;text-align:center;font-size:12px;padding:11px 16px;line-height:1.5;border-bottom:1px solid #f0dcb6}
+.layout{display:grid;grid-template-columns:218px minmax(0,1fr);max-width:1300px;margin:auto;min-height:calc(100dvh - 117px)}
+aside{padding:32px 14px;border-right:1px solid #ece5df;background:#fffcf9}aside small{display:block;color:#ac9a8d;font-weight:800;font-size:10px;letter-spacing:1.6px;margin:0 12px 15px}
+.nav{display:block;text-align:left;color:#766b64;background:transparent;border:0;width:100%;padding:14px;border-radius:10px;margin-bottom:5px;font-size:13px;font-weight:650}.nav.active{background:#f7eee8;color:#a06952}.nav:disabled{opacity:.5;cursor:not-allowed}
+.content{padding:clamp(18px,4vw,42px);max-width:1050px;width:100%;margin:auto}
+.eyebrow{font-size:10px;letter-spacing:2.2px;font-weight:800;color:#aa7864;margin:0 0 7px}
+h1,h2,h3,p{margin-top:0}h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(27px,4vw,39px);font-weight:400;letter-spacing:-.7px;margin-bottom:9px}h2{font-size:18px;font-weight:700;margin-bottom:15px}h3{font-size:14px}
+.sub{color:#8b8078;font-size:13px;line-height:1.6;margin-bottom:26px}
+.summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-bottom:24px}.stat{border:1px solid #eee5df;border-radius:16px;background:#fff;padding:19px}.stat span{display:block;font-size:11px;color:#877d77;margin-bottom:5px}.stat strong{font-size:30px;font-weight:600}
+.panel{background:#fff;border:1px solid #efe7e1;border-radius:17px;padding:clamp(15px,2vw,26px);box-shadow:0 12px 45px #68513d0a}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.search{padding:12px;border:1px solid #e4dcd4;background:#fffdfb;border-radius:10px;min-width:190px;max-width:100%;width:260px;font-size:12px}
+.item{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) auto;align-items:center;gap:14px;padding:19px 0;border-bottom:1px solid #f0eae5}.item:last-child{border-bottom:0}
+.item strong{font-size:14px;overflow-wrap:anywhere}.muted{font-size:12px;color:#94877e;line-height:1.6;margin-top:5px}.tag{display:inline-flex;border-radius:99px;background:#fbefdb;color:#a07133;padding:5px 9px;font-size:10px;font-weight:750;white-space:nowrap}.tag.review{background:#edf2fb;color:#58709e}.tag.published{background:#eaf4ed;color:#487453}
+.btn{padding:11px 14px;border-radius:10px;background:#fff;border:1px solid #dfd4ca;color:#67544a;font-size:12px;font-weight:700;min-height:42px}.btn.primary{background:#a16d58;border-color:#a16d58;color:#fff}.btn.danger{background:#ab715d;color:#fff;border-color:#ab715d}.btn.light{background:#f9f1eb;border-color:#f9f1eb;color:#946855}
+.btn-row{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:20px}.field{margin-bottom:16px}.field label{display:block;font-weight:700;font-size:12px;margin-bottom:8px}.field input,.field select,.field textarea{width:100%;padding:12px 13px;border:1px solid #e1d9d1;border-radius:10px;color:#292827;background:#fffdfb;outline:none;font-size:13px}.field textarea{min-height:180px;resize:vertical;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;line-height:1.7}.field input:focus,.field textarea:focus,.field select:focus{border-color:#ae826d}
+.columns{display:grid;grid-template-columns:1fr 1fr;gap:15px}.info{background:#fbf7f3;border:1px solid #f0e4db;border-radius:12px;padding:15px;font-size:12px;color:#786d65;line-height:1.65;margin-bottom:21px}.info strong{color:#413b37}.info a{color:#9a624f}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:12px;line-height:1.6;margin:20px 0}.check input{margin-top:3px}
+.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#302d2a;color:white;padding:13px 17px;border-radius:12px;box-shadow:0 10px 30px #0002;font-size:12px;max-width:calc(100vw - 20px);z-index:3}
+.empty{padding:35px;text-align:center;color:#9b8f86;font-size:13px}
+.small-footer{text-align:center;color:#a0948a;font-size:11px;padding:22px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{padding:10px 14px;display:flex;gap:9px;border-bottom:1px solid #eee5dd;border-right:0}aside small{display:none}.nav{width:auto;padding:10px 12px;white-space:nowrap;margin:0;font-size:12px}.content{padding:20px 13px}.summary{gap:8px}.stat{padding:13px}.stat strong{font-size:25px}.item{grid-template-columns:1fr auto;gap:7px}.item>.mid{grid-column:1}.item>.action{grid-column:2;grid-row:1 / span 2}}
+@media(max-width:430px){.header{padding:12px 13px}.identity strong{font-size:10px;letter-spacing:1.1px}.identity span{font-size:9px}.logo{width:35px;height:35px;font-size:24px}.columns{grid-template-columns:1fr}.stat span{font-size:10px}.summary{grid-template-columns:repeat(3,minmax(0,1fr))} .panel{border-radius:13px}.search{width:100%}.panel-head{align-items:stretch}}
+</style></head>
+<body><header class="header"><div class="identity"><div class="logo">R</div><div><strong>ROYAL WEDDING</strong><span>CMS · Manajemen Undangan</span></div></div><div class="header-r"><button class="bell" id="bell" aria-label="Notifikasi" type="button">🔔 <b id="bellcount">3</b></button><div class="avatar">AD</div></div></header>
+<div class="demo"><b>MODE PRATINJAU CMS</b> — Seluruh pesanan di bawah hanya contoh. Tombol Simpan dan Terbitkan tidak mengubah CMS asli.</div>
+<div class="layout"><aside><small>MENU ADMIN</small><button class="nav active" id="navreview">☷ &nbsp; Antrean Review</button><button class="nav" id="navback">✦ &nbsp; Daftar Undangan</button><button class="nav" disabled>⚙ &nbsp; Pengaturan CMS</button></aside>
+<main class="content" id="content"></main></div><div class="small-footer">Pratinjau khusus admin · Belum terhubung database atau CMS produksi</div>
+<script>
+(function(){
+"use strict";
+const content=document.getElementById("content");
+const demo=[
+ {number:"261101-RWI001",wa:"081234567890",shop:"contoh_shopee_01",bride:"Nadia Putri",groom:"Rizky Pratama",name:"Nadia & Rizky",slug:"nadia-rizky",theme:"violet",photo:"Dengan Foto",photos:7,status:"pending_review",date:"01 Nov 2026, 10.32",events:[{name:"Akad Nikah",date:"2027-02-14",time:"08.00 WIB",address:"Gedung Serbaguna, Kediri",maps:""},{name:"Resepsi",date:"2027-02-14",time:"11.00 WIB",address:"Gedung Serbaguna, Kediri",maps:""}]},
+ {number:"261101-RWI002",wa:"081234000002",shop:"contoh_shopee_02",bride:"Alya",groom:"Fajar",name:"Alya & Fajar",slug:"alya-fajar",theme:"sage",photo:"Tanpa Foto",photos:0,status:"pending_review",date:"01 Nov 2026, 09.48",events:[]},
+ {number:"261101-RWI003",wa:"081234000003",shop:"contoh_shopee_03",bride:"Dina",groom:"Ahmad",name:"Dina & Ahmad",slug:"dina-ahmad",theme:"brown",photo:"Dengan Foto",photos:5,status:"in_review",date:"31 Okt 2026, 20.18",events:[{name:"Resepsi",date:"",time:".",address:"",maps:""}]},
+ {number:"261101-RWI004",wa:"081234000004",shop:"contoh_shopee_04",bride:"Maya",groom:"Arif",name:"Maya & Arif",slug:"maya-arif",theme:"violet",photo:"Tanpa Foto",photos:0,status:"published",date:"31 Okt 2026, 14.01",events:[]}
+];
+demo.forEach(d=>d.json=JSON.stringify({order_number:d.number,theme:null,mempelai_1:{full_name:d.bride,short_name:d.bride.split(" ")[0]},mempelai_2:{full_name:d.groom,short_name:d.groom.split(" ")[0]},events:d.events},null,2));
+let selected=null,search="",edit=null;
+const count=()=>demo.filter(d=>d.status!=="published").length;
+const esc=t=>String(t??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const status=s=>s==="published"?"Sudah Diterbitkan":s==="in_review"?"Sedang Diperiksa":"Menunggu Review";
+const tag=s=>s==="published"?"published":s==="in_review"?"review":"";
+const header=(k,t,d)=>'<p class="eyebrow">'+esc(k)+'</p><h1>'+esc(t)+'</h1><p class="sub">'+esc(d)+'</p>';
+function notify(message){let old=document.querySelector(".toast");if(old)old.remove();let el=document.createElement("div");el.className="toast";el.textContent=message;document.body.appendChild(el);setTimeout(()=>el.remove(),3500)}
+function render(){
+ document.getElementById("bellcount").textContent=count();
+ document.getElementById("navreview").classList.toggle("active",!selected);
+ document.getElementById("navback").classList.toggle("active",!!selected);
+ if(!selected){
+ let rows=demo.filter(d=>(d.number+" "+d.name+" "+d.shop).toLowerCase().includes(search.toLowerCase()));
+ content.innerHTML=header("PENGELOLAAN FORMULIR","Antrean Review Form Undangan","Pesanan digital yang dikirim pelanggan masuk ke sini untuk diperiksa sebelum dipublikasikan.")+
+ '<div class="summary"><div class="stat"><span>Menunggu Review</span><strong>'+demo.filter(d=>d.status==="pending_review").length+'</strong></div><div class="stat"><span>Sedang Diperiksa</span><strong>'+demo.filter(d=>d.status==="in_review").length+'</strong></div><div class="stat"><span>Sudah Terbit</span><strong>'+demo.filter(d=>d.status==="published").length+'</strong></div></div>'+
+ '<section class="panel"><div class="panel-head"><h2>Daftar Pengajuan</h2><input class="search" id="search" placeholder="Cari nomor pesanan atau nama..." value="'+esc(search)+'"></div>'+
+ (rows.length?rows.map((d)=>'<div class="item"><div><strong>'+esc(d.name)+'</strong><div class="muted">No. Shopee: '+esc(d.number)+'<br>'+esc(d.date)+'</div></div><div class="mid"><span class="tag '+tag(d.status)+'">'+status(d.status)+'</span><div class="muted">'+esc(d.photo)+' · '+d.photos+' foto</div></div><div class="action"><button class="btn light" data-open="'+esc(d.number)+'">Periksa →</button></div></div>').join(""):'<div class="empty">Tidak ada pesanan ditemukan.</div>')+'</section>';
+ content.querySelector("#search").addEventListener("input",e=>{search=e.target.value;let pos=e.target.selectionStart;render();let n=content.querySelector("#search");n.focus();n.setSelectionRange(pos,pos)});
+ content.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{selected=demo.find(d=>d.number===b.dataset.open);edit={...selected};render();window.scrollTo(0,0);});
+ return;
+ }
+ const d=selected;if(!edit)edit={...d};
+ content.innerHTML='<button class="btn" id="back" style="margin-bottom:20px">← Kembali ke Antrean</button>'+
+ header("PEMERIKSAAN PESANAN","Review Undangan "+d.number,"Periksa data, tentukan nama undangan, slug, dan tema. Publikasi hanya terjadi setelah persetujuan admin pada CMS asli.")+
+ '<div class="info"><strong>Status: '+status(d.status)+'</strong><br>Akun Shopee: '+esc(d.shop)+' · WhatsApp: '+esc(d.wa)+'<br>Paket: '+esc(d.photo)+' · '+d.photos+' foto (foto belum ditransfer ke CMS)<br><strong>Data contoh, bukan pesanan sungguhan.</strong></div>'+
+ '<section class="panel"><h2>Pengaturan Undangan</h2><div class="columns"><div class="field"><label for="name">Nama Undangan</label><input id="name" value="'+esc(edit.name)+'"></div><div class="field"><label for="slug">Slug Undangan</label><input id="slug" value="'+esc(edit.slug)+'"></div></div>'+
+ '<div class="field"><label for="theme">Tema Undangan</label><select id="theme">'+["violet","sage","brown","jawa","bali","pink","biru","hitam","dayak","bugis"].map(x=>'<option value="'+x+'" '+(x===edit.theme?"selected":"")+'>'+x[0].toUpperCase()+x.slice(1)+'</option>').join("")+'</select></div>'+
+ '<div class="field"><label for="json">JSON Undangan (dapat diedit)</label><textarea id="json" spellcheck="false">'+esc(edit.json)+'</textarea><p class="muted">Draf boleh disimpan walaupun belum lengkap. Saat publish, CMS asli akan memvalidasi kelengkapannya.</p></div>'+
+ (d.status!=="published"?'<div class="btn-row"><button class="btn light" id="save">Simpan Hasil Pemeriksaan</button><button class="btn primary" id="publish">Terbitkan Undangan (Simulasi)</button></div>':'<div class="info" style="margin-top:20px">Undangan contoh ini telah diterbitkan dalam simulasi.</div>')+
+ '</section>';
+ document.querySelector("#back").onclick=()=>{selected=null;edit=null;render();window.scrollTo(0,0)};
+ const take=()=>{edit.name=document.querySelector("#name").value;edit.slug=document.querySelector("#slug").value;edit.theme=document.querySelector("#theme").value;edit.json=document.querySelector("#json").value};
+ if(d.status!=="published"){
+ document.querySelector("#save").onclick=()=>{take();try{JSON.parse(edit.json)}catch{notify("JSON tidak valid. Perbaiki sebelum disimpan.");return;}Object.assign(d,edit,{status:"in_review"});notify("Simulasi: hasil pemeriksaan disimpan. Belum dipublikasikan.");render()};
+ document.querySelector("#publish").onclick=()=>{take();let p;try{p=JSON.parse(edit.json)}catch{notify("JSON tidak valid. Perbaiki sebelum menerbitkan.");return;}
+ if(!edit.name.trim()||! /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(edit.slug)){notify("Nama dan slug undangan harus valid.");return;}
+ if(!p.mempelai_1?.short_name||!p.events?.length||p.events.some(e=>!e.name||!e.date||!e.address)){notify("Data belum lengkap. CMS asli akan menolak publikasi.");return;}
+ if(confirm("SIMULASI SAJA: Tandai undangan contoh sebagai sudah diterbitkan? Tidak mengubah CMS live.")){Object.assign(d,edit,{status:"published"});notify("Simulasi: undangan contoh diterbitkan. CMS live tidak berubah.");render();}
+ };
+ }
+}
+document.getElementById("bell").onclick=()=>{selected=null;search="";render();notify("Menampilkan antrean pengajuan (data simulasi).")};
+document.getElementById("navreview").onclick=()=>{selected=null;render()};
+document.getElementById("navback").onclick=()=>notify("Daftar undangan asli tidak tersedia dalam pratinjau.");
+render();
+})();
+</script></body></html>
