@@ -30,6 +30,7 @@ Route::prefix('api')->group(function () {
         Route::delete('/orders/{order}', [RoyalAdminController::class, 'destroy']);
         Route::post('/orders/{order}/seen', [RoyalAdminController::class, 'markSeen']);
         Route::get('/orders/{order}/export', [RoyalAdminController::class, 'export']);
+        Route::post('/orders/{order}/sync-cms', [RoyalAdminController::class, 'syncCms'])->middleware('throttle:5,1');
         Route::get('/orders/{order}/photos/{photo}', [RoyalAdminController::class, 'photo']);
     });
 });

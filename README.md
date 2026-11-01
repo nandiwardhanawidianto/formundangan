@@ -44,3 +44,18 @@ Alamat pelanggan: `http://127.0.0.1:8000/` (tanpa tombol atau tautan admin). Ala
 - `resources/js/royal.jsx`: komponen pelanggan dan admin, dipilih berdasarkan identitas halaman.
 - `resources/css/royal.css`: tampilan responsive.
 - `database/migrations`: struktur data.
+
+## Integrasi Form Undangan → CMS (draft/review, tanpa publish otomatis)
+
+Untuk pesanan **digital** yang menekan tombol pengajuan, Laravel menyimpan pesanan terlebih dahulu, kemudian mengirim POST JSON server-ke-server ke endpoint yang dikonfigurasi di `ROYAL_CMS_SUBMISSION_URL`. Header otentikasi: `X-CMS-Integration-Token`. Simpan token acak panjang di .env kedua aplikasi, jangan pernah commit token ke GitHub.
+
+Contoh .env lokal **tanpa nilai rahasia**:
+
+```dotenv
+ROYAL_CMS_SUBMISSION_URL=https://cms.example.com/api/form-submissions
+ROYAL_CMS_INTEGRATION_TOKEN=
+```
+
+CMS menerima JSON berisi `order_number`, `customer_whatsapp`, `shopee_username`, `photo_count`, `photo_package`, dan `payload` (format impor CMS). Keberhasilan hanya diakui bila CMS mengembalikan `status: pending_review`. Undangan cetak tidak dikirim. Bila CMS gagal, pesanan tetap tersimpan; admin dapat melihat `cms_sync_status` dan menekan **Kirim Ulang ke CMS** pada dashboard. Pengiriman ulang memakai nomor Shopee yang sama agar antrean CMS tidak membuat duplikasi.
+
+**Foto belum ditransfer lintas server**; hanya jumlahnya yang dikirim agar admin tahu ada foto yang harus diproses. Foto pelanggan tetap tersimpan privat di Form Undangan. Preview GitHub Pages tetap simulasi, tidak berkomunikasi dengan CMS.

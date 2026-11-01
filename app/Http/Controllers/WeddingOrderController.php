@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\WeddingOrder;
 use App\Models\WeddingPhoto;
+use App\Services\CmsSubmissionSender;
+use App\Services\InvitationExporter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -83,7 +85,7 @@ class WeddingOrderController extends Controller
         return response()->json(['order' => $this->viewOrder($order)]);
     }
 
-    public function submit(string $orderNumber): JsonResponse
+    public function submit(string $orderNumber, CmsSubmissionSender $cms, InvitationExporter $exporter): JsonResponse
     {
         $order = WeddingOrder::where('order_number', $orderNumber)->firstOrFail();
         $order->status = 'submitted';
@@ -91,13 +93,16 @@ class WeddingOrderController extends Controller
         $order->notification_seen_at = null;
         $order->reviewed_at = null;
         $order->save();
+        // Simpan pengajuan terlebih dahulu; kegagalan CMS tidak membatalkan pesanan/WhatsApp.
+        $sync = $cms->send($order, $exporter);
         $note = "Halo Admin Royal Wedding Invitation.\n\nSaya sudah mengisi data undangan melalui website.\nNomor Pesanan Shopee: {$order->order_number}\n\nData saya sudah tersimpan. Mohon diperiksa dan diberi tahu jika perlu perbaikan atau kelengkapan data.\nTerima kasih.";
         $admin = preg_replace('/\D/', '', config('royal.admin_whatsapp', ''));
         if (str_starts_with($admin, '0')) $admin = '62'.substr($admin, 1);
         return response()->json([
             'order' => $this->viewOrder($order),
             'whatsapp_url' => $admin ? 'https://wa.me/'.$admin.'?text='.rawurlencode($note) : null,
-            'notice' => 'Data tersimpan. Anda masih perlu menekan Kirim di WhatsApp.',
+            'notice' => 'Data tersimpan. '.$sync['message'].' Anda masih perlu menekan Kirim di WhatsApp.',
+            'cms_sync_status' => $sync['status'],
         ]);
     }
 

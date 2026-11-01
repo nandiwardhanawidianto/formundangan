@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\WeddingOrder;
 use App\Models\WeddingPhoto;
 use App\Services\InvitationExporter;
+use App\Services\CmsSubmissionSender;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -99,6 +100,16 @@ class RoyalAdminController extends Controller
         if (($data['status'] ?? null) === 'approved') $data['reviewed_at'] = now();
         $order->update($data);
         return response()->json(['order' => $order->fresh('photos')]);
+    }
+
+    public function syncCms(WeddingOrder $order, CmsSubmissionSender $cms, InvitationExporter $exporter): JsonResponse
+    {
+        $this->requireAdmin();
+        if ($order->product_type !== 'digital' || !$order->submitted_at) {
+            return response()->json(['message' => 'Hanya undangan digital yang sudah diajukan dapat dikirim ke CMS.'], 422);
+        }
+        $result = $cms->send($order, $exporter);
+        return response()->json(['result' => $result, 'order' => $order->fresh('photos')]);
     }
 
     public function destroy(WeddingOrder $order): JsonResponse

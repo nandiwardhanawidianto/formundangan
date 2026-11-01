@@ -46,12 +46,19 @@ class InvitationExporter
         if ($order->product_type === 'digital') {
             $gifts = [];
             foreach (array_slice($p['love_gift'] ?? [], 0, 3) as $gift) {
-                if (!isset($gift['account_number']) || trim($gift['account_number']) === '') continue;
+                if (trim($gift['account_number'] ?? '') === '' || trim($gift['bank'] ?? '') === '' || trim($gift['account_name'] ?? '') === '') continue;
                 $gift['bank'] = strcasecmp(trim($gift['bank'] ?? ''), 'seabank') === 0 ? 'Sea Bank' : ($gift['bank'] ?? '');
                 $gifts[] = $gift;
             }
-            if ($gifts) $out['lovegift'] = $gifts;
-            if (!empty($p['gift_delivery']['address'])) $out['gift_delivery'] = $p['gift_delivery'];
+            if ($gifts) $out['love_gifts'] = $gifts;
+            $delivery = $p['gift_delivery'] ?? [];
+            if (!empty($delivery['recipient']) && !empty($delivery['phone']) && !empty($delivery['address'])) {
+                $out['gift_delivery'] = [
+                    'recipient_name' => $delivery['recipient'],
+                    'phone' => $delivery['phone'],
+                    'address' => $delivery['address'],
+                ];
+            }
         }
         return $out;
     }
