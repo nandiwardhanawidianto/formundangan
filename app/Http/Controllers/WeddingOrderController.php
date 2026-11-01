@@ -63,6 +63,10 @@ class WeddingOrderController extends Controller
             'payload.bride' => ['sometimes', 'array'],
             'payload.groom' => ['sometimes', 'array'],
             'payload.events' => ['sometimes', 'array', 'max:3'],
+            'payload.love_gift' => ['sometimes', 'array', 'max:3'],
+            'payload.love_gift.*.bank' => ['nullable', 'string', 'max:120'],
+            'payload.love_gift.*.account_number' => ['nullable', 'string', 'max:120'],
+            'payload.love_gift.*.account_name' => ['nullable', 'string', 'max:120'],
             'payload.events.*.date' => ['nullable', 'date_format:Y-m-d'],
             'payload.events.*.maps' => ['nullable', 'string', 'max:2048'],
         ]);
