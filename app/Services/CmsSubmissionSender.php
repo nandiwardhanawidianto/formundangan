@@ -45,6 +45,17 @@ class CmsSubmissionSender
                 return ['status' => 'pending_review', 'message' => 'Data digital sudah masuk antrean review CMS. Belum dipublikasikan.'];
             }
 
+            if ($response->status() === 409 && $response->json('status') === 'review_locked') {
+                $order->forceFill([
+                    'cms_sync_status' => 'review_locked',
+                    'cms_sync_error' => null,
+                ])->save();
+                return [
+                    'status' => 'review_locked',
+                    'message' => 'Pengajuan sudah ditinjau atau diterbitkan di CMS. Perubahan berikutnya perlu diperiksa admin langsung di CMS.',
+                ];
+            }
+
             $error = 'CMS menolak pengiriman (HTTP '.$response->status().').';
             $order->forceFill(['cms_sync_status' => 'failed', 'cms_sync_error' => $error])->save();
             return ['status' => 'failed', 'message' => $error.' Admin dapat mencoba kirim ulang.'];
