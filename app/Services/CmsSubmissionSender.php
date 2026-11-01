@@ -34,6 +34,7 @@ class CmsSubmissionSender
                 'photo_count' => $order->photos_count,
                 'photo_package' => $order->photo_package,
                 'payload' => $exporter->data($order),
+                'raw_form' => $order->payload ?? [], // data asli, termasuk kolom opsional yang belum lengkap
             ]);
 
             if ($response->successful() && $response->json('status') === 'pending_review') {
