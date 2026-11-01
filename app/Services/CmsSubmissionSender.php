@@ -30,6 +30,7 @@ class CmsSubmissionSender
                 'order_number' => $order->order_number,
                 'customer_whatsapp' => $order->customer_whatsapp,
                 'shopee_username' => $order->shopee_username,
+                'display_order' => $order->display_order,
                 'photo_count' => $order->photos_count,
                 'photo_package' => $order->photo_package,
                 'payload' => $exporter->data($order),
