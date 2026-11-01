@@ -31,9 +31,9 @@ footer{text-align:center;color:#96877b;font-size:11px;margin-top:24px}
 <script>
 (function(){
 'use strict';
-var data={order:'',wa:'',shop:'',type:'',photo:'',display:'wanita',groom:'',gshort:'',gorder:'',gfather:'',gmom:'',bride:'',bshort:'',border:'',bfather:'',bmom:'',pengangkat:'',turut:'',bank:'',rekening:'',atasnama:'',kado:'',kadotel:'',kadoalamat:'',files:[]};
+var data={order:'',wa:'',shop:'',type:'',photo:'',display:'wanita',groom:'',gshort:'',gorder:'',gfather:'',gmom:'',bride:'',bshort:'',border:'',bfather:'',bmom:'',pengangkat:'',turut:'',bank:'',rekening:'',atasnama:'',kado:'',kadotel:'',kadoalamat:'',gifts:[],files:[]};
 for(var i=1;i<=3;i++){data['event'+i]='';data['date'+i]='';data['time'+i]='';data['loc'+i]='';data['map'+i]='';}
-var steps=[],index=-1,submitted=0,adminView=false,errors='',panel=document.getElementById('panel');
+var steps=[],index=-1,activeGift=0,submitted=0,adminView=false,errors='',panel=document.getElementById('panel');
 var spec=[
 {id:'product',title:'Pilih jenis undangan',desc:'Sesuaikan dengan produk yang dibeli di Shopee.',fields:[{key:'type',type:'choice',label:'Jenis Undangan',options:[['digital','Undangan Digital Website','Undangan dalam bentuk website'],['print','Undangan Cetak','Undangan fisik yang dicetak']]}]},
 {id:'photo',title:'Pilih paket foto',desc:'Pastikan pilihan ini sama dengan pesanan Shopee.',fields:[{key:'photo',type:'choice',label:'Jenis Paket',options:[['yes','Dengan Foto','Maksimal 10 foto'],['no','Tanpa Foto','Tidak menggunakan foto']]}]},
@@ -49,7 +49,7 @@ spec.push({id:'eventb'+k,title:'Acara '+k+' — Detail',desc:'Waktu dan lokasi b
 }
 spec.push({id:'pengangkat',title:'Pengangkat Hajat',desc:'Tulis satu nama pada setiap baris.',fields:[{key:'pengangkat',label:'Nama Pengangkat Hajat',type:'textarea'}]});
 spec.push({id:'turut',title:'Turut Mengundang',desc:'Bagian ini opsional. Tulis satu nama pada setiap baris.',fields:[{key:'turut',label:'Daftar Turut Mengundang',type:'textarea'}]});
-spec.push({id:'gift',title:'Love Gift',desc:'Khusus untuk undangan digital.',fields:[{key:'bank',label:'Nama Bank'},{key:'rekening',label:'Nomor Rekening'},{key:'atasnama',label:'Nama Pemilik Rekening'}]});
+spec.push({id:'gift',title:'Love Gift',desc:'Maksimal 3 rekening bank. Boleh dikosongkan.',fields:[]});
 spec.push({id:'delivery',title:'Kirim Kado',desc:'Khusus untuk undangan digital.',fields:[{key:'kado',label:'Nama Penerima'},{key:'kadotel',label:'Nomor WhatsApp Penerima',type:'tel'},{key:'kadoalamat',label:'Alamat Penerima',type:'textarea'}]});
 spec.push({id:'upload',title:'Unggah Foto',desc:'Maksimal 10 JPG, JPEG, atau PNG. Maksimal 7 MB per foto.',fields:[{key:'files',type:'file',label:'Pilih Foto'}]});
 spec.push({id:'review',title:'Periksa data undangan',desc:'Anda tetap boleh mengajukan data meski belum lengkap.',fields:[]});
@@ -69,7 +69,25 @@ function checkPage(){errors='';if(!data.order.trim()||!data.wa.trim()){errors='N
 function render(){adminView=false;panel.replaceChildren();var tag=document.getElementById('count');tag.textContent=String(submitted);
 if(index===-1){heading('Setiap kisah cinta punya awal yang indah.','Isi data undangan satu langkah setiap kali. Tidak perlu mengisi semuanya sekaligus.','FORMULIR PELANGGAN · PRATINJAU');var top=div('formarea');var tip=div('tip');tip.innerHTML='<strong>Cara menemukan nomor pesanan</strong><br>Buka Shopee → Saya → Pesanan Saya → pilih pesanan undangan → lihat Nomor Pesanan. Gambar panduan asli akan ditambahkan saat peluncuran.';top.appendChild(tip);addField({key:'order',label:'Nomor Pesanan Shopee'},top);addField({key:'wa',label:'Nomor WhatsApp Aktif',type:'tel',placeholder:'081234567890'},top);panel.appendChild(top);error();actions([btn('Lanjut →','primary',checkPage)]);return;}
 steps=allSteps();if(index>=steps.length)index=steps.length-1;var step=steps[index];var pro=div('progress');var a=document.createElement('span'),b=document.createElement('span');a.textContent='Langkah '+(index+1)+' dari '+steps.length;b.textContent=Math.round((index+1)/steps.length*100)+'%';pro.appendChild(a);pro.appendChild(b);panel.appendChild(pro);var track=div('track'),fill=div('fill');fill.style.width=((index+1)/steps.length*100)+'%';track.appendChild(fill);panel.appendChild(track);heading(step.title,step.desc,'DATA UNDANGAN');var fields=div('formarea');step.fields.forEach(function(f){addField(f,fields);});
-if(step.id==='review'){var summary=div('review');[['Nomor Pesanan',data.order],['WhatsApp',data.wa],['Produk',data.type==='digital'?'Undangan Digital '+(data.photo==='yes'?'Dengan Foto':'Tanpa Foto'):'Undangan Cetak'],['Mempelai Pria',data.groom||'Belum diisi'],['Mempelai Wanita',data.bride||'Belum diisi'],['Acara 1',data.event1||'Belum diisi'],['Acara 2',data.event2||'Belum diisi'],['Acara 3',data.event3||'Belum diisi'],['Jumlah Foto',String(data.files.length)]].forEach(function(pair){var d=document.createElement('div'),s=document.createElement('span'),v=document.createElement('strong');s.textContent=pair[0];v.textContent=pair[1];d.appendChild(s);d.appendChild(v);summary.appendChild(d);});fields.appendChild(summary);}
+if(step.id==='gift'){
+var hint=div('tip');hint.textContent='Anda dapat menambahkan paling banyak 3 rekening. Jika tidak ingin menampilkan rekening, pilih Isi Nanti.';fields.appendChild(hint);
+var count=div('kicker');count.textContent=data.gifts.length+' dari 3 rekening';fields.appendChild(count);
+if(data.gifts.length>0){
+activeGift=Math.max(0,Math.min(activeGift,data.gifts.length-1));
+var tabs=div('actions');tabs.style.paddingTop='0';tabs.style.borderTop='none';tabs.style.marginTop='0';
+data.gifts.forEach(function(g,i){tabs.appendChild(btn('Rekening '+(i+1),i===activeGift?'primary':'soft',function(){activeGift=i;render();}));});
+fields.appendChild(tabs);
+var gift=data.gifts[activeGift];
+[['bank','Nama Bank'],['account_number','Nomor Rekening'],['account_name','Nama Pemilik Rekening']].forEach(function(entry){
+var wrap=div('field'),label=document.createElement('span'),input=document.createElement('input');label.textContent=entry[1];input.type='text';input.value=gift[entry[0]]||'';input.addEventListener('input',function(){gift[entry[0]]=input.value;});wrap.appendChild(label);wrap.appendChild(input);fields.appendChild(wrap);
+});
+fields.appendChild(btn('Hapus Rekening '+(activeGift+1),'soft',function(){data.gifts.splice(activeGift,1);activeGift=Math.max(0,activeGift-1);render();}));
+}
+if(data.gifts.length<3){fields.appendChild(btn('+ Tambah Rekening','',function(){data.gifts.push({bank:'',account_number:'',account_name:''});activeGift=data.gifts.length-1;render();}));}
+else{var full=div('help');full.textContent='Batas maksimal 3 rekening tercapai.';fields.appendChild(full);}
+}
+
+if(step.id==='review'){var summary=div('review');[['Nomor Pesanan',data.order],['WhatsApp',data.wa],['Produk',data.type==='digital'?'Undangan Digital '+(data.photo==='yes'?'Dengan Foto':'Tanpa Foto'):'Undangan Cetak'],['Mempelai Pria',data.groom||'Belum diisi'],['Mempelai Wanita',data.bride||'Belum diisi'],['Acara 1',data.event1||'Belum diisi'],['Acara 2',data.event2||'Belum diisi'],['Acara 3',data.event3||'Belum diisi'],['Jumlah Love Gift',String(data.gifts.length)],['Jumlah Foto',String(data.files.length)]].forEach(function(pair){var d=document.createElement('div'),s=document.createElement('span'),v=document.createElement('strong');s.textContent=pair[0];v.textContent=pair[1];d.appendChild(s);d.appendChild(v);summary.appendChild(d);});fields.appendChild(summary);}
 panel.appendChild(fields);error();
 var back=btn('← Kembali','',function(){index=Math.max(-1,index-1);errors='';render();});
 if(step.id==='review'){actions([back,btn('Simulasikan Pengajuan','primary',function(){submitted++;index=-2;renderSuccess();})]);}
