@@ -56,6 +56,6 @@ ROYAL_CMS_SUBMISSION_URL=https://cms.example.com/api/form-submissions
 ROYAL_CMS_INTEGRATION_TOKEN=
 ```
 
-CMS menerima JSON berisi `order_number`, `customer_whatsapp`, `shopee_username`, `photo_count`, `photo_package`, dan `payload` (format impor CMS). Keberhasilan hanya diakui bila CMS mengembalikan `status: pending_review`. Undangan cetak tidak dikirim. Bila CMS gagal, pesanan tetap tersimpan; admin dapat melihat `cms_sync_status` dan menekan **Kirim Ulang ke CMS** pada dashboard. Pengiriman ulang memakai nomor Shopee yang sama agar antrean CMS tidak membuat duplikasi.
+CMS menerima JSON berisi `order_number`, `customer_whatsapp`, `shopee_username`, `photo_count`, `photo_package`, `payload` (format impor CMS), dan `raw_form` (seluruh jawaban asli untuk review, termasuk isian parsial). Keberhasilan hanya diakui bila CMS mengembalikan `status: pending_review`. Undangan cetak tidak dikirim. Bila CMS gagal, pesanan tetap tersimpan; admin dapat melihat `cms_sync_status` dan menekan **Kirim Ulang ke CMS** pada dashboard. Pengiriman ulang memakai nomor Shopee yang sama agar antrean CMS tidak membuat duplikasi.
 
 **Foto belum ditransfer lintas server**; hanya jumlahnya yang dikirim agar admin tahu ada foto yang harus diproses. Foto pelanggan tetap tersimpan privat di Form Undangan. Preview GitHub Pages tetap simulasi, tidak berkomunikasi dengan CMS.
